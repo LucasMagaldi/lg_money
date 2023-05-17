@@ -1,12 +1,13 @@
 import React from 'react';
 import { Container } from './styles';
+import Summary from '../Summary';
 
-const index = () => {
+const Dashboard = () => {
   return (
     <Container>
-        
+        <Summary />
     </Container>
   );
 }
 
-export default index
+export default Dashboard
