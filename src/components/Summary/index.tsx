@@ -23,7 +23,7 @@ const Summary = () => {
         deposit:0,
         withdraw: 0,
         total: 0
-    })
+    });
 
   return (
    <Container>

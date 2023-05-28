@@ -4,7 +4,7 @@ import { TransactionContext } from '../../context/TransactionContext';
 
 const TransactionTable = () => {
 
-    const { transactions } = useContext(TransactionContext);
+    const { transactions, handleOpenEditTransactioModal } = useContext(TransactionContext);
 
   return (
     <Container>
@@ -21,7 +21,11 @@ const TransactionTable = () => {
             </thead>
             <tbody>
                   {transactions.map(transaction => (
-                    <tr key={transaction.id}>
+                    <tr 
+                      key={transaction.id} 
+                      onClick={() => handleOpenEditTransactioModal(transaction)}
+                      className='editRow'
+                      >
                        <td>{transaction.title}</td>
                        <td className={transaction.type}>{new Intl.NumberFormat("pt-BR", {
                         style: "currency",

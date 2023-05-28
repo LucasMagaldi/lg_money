@@ -15,6 +15,12 @@ export const Container = styled.div`
             line-height: 1.5rem;
         }
 
+        tr {
+            &.editRow {
+                cursor: pointer;
+            }
+        }
+
         td {
             padding: 1rem 2rem;
             background:var(--shape);

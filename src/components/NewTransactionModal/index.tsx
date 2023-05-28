@@ -7,56 +7,73 @@ import closeImg from "../../assets/close.svg";
 import incomeImg from "../../assets/income.svg";
 import outcomeImg from "../../assets/outcome.svg";
 
-interface NewTransactionModalProps  {
-    isOpen: boolean,
-    onRequestClose: () => void;
-}
 
-function NewTransactionModal ({ isOpen, onRequestClose }: NewTransactionModalProps) {
+function NewTransactionModal () {
 
-  const [type, setType] = useState('');
-  const [value, setValue] = useState(0);
-  const [category, setCategory] = useState("");
-  const [title, setTitle] = useState("");
-
-  const { createTransaction } = useContext(TransactionContext);
+  const { 
+    createTransaction, 
+    handleCloseNewTransactionModal, 
+    isNewTransactionModalOpen,
+    editTransactionModalOpen,
+    editTransaction,
+    title,
+    setTitle,
+    value,
+    setValue,
+    category,
+    setCategory,
+    type,
+    setType
+  } = useContext(TransactionContext);
 
   const handleCreateNewTransaction = async (event: FormEvent) => {
     event.preventDefault();
 
-    await createTransaction({
-      value,
-      title,
-      type,
-      category
-    });
+    if (isNewTransactionModalOpen) {
+      await createTransaction({
+        value,
+        title,
+        type,
+        category
+      });
+    }
+    
+    if (editTransactionModalOpen) {
+      await editTransaction({
+        value,
+        title,
+        type,
+        category,
+        id: 1
+      });
+    }
 
     setTitle("");
     setType("");
     setValue(0);
     setCategory("");
     
-    onRequestClose();
+    handleCloseNewTransactionModal();
   }
 
   return (
     <ReactModal 
-        isOpen={isOpen} 
-        onRequestClose={onRequestClose}
+        isOpen={isNewTransactionModalOpen || editTransactionModalOpen} 
+        onRequestClose={handleCloseNewTransactionModal}
         overlayClassName="react-modal-overlay"
         className="react-modal-content"
         >   
 
         <button
         type='button'
-        onClick={onRequestClose}
+        onClick={handleCloseNewTransactionModal}
         className='react-modal-close'
         >
             <img src={closeImg} alt='Fechar Modal'/>
         </button>
 
          <Container onSubmit={handleCreateNewTransaction}>
-            <h2>Nova Transação</h2>
+            { isNewTransactionModalOpen ? <h2>Nova Transação</h2> : <h2>Editando Transação</h2> }
 
             <input 
             placeholder='Título' 
@@ -97,7 +114,7 @@ function NewTransactionModal ({ isOpen, onRequestClose }: NewTransactionModalPro
             onChange={event => setCategory(event.target.value)}
             /> 
 
-            <button type='submit'>Cadastrar</button>
+            <button type='submit'>{isNewTransactionModalOpen ? "Cadastrar" : "Editar"}</button>
          </Container>
     </ReactModal>
   )

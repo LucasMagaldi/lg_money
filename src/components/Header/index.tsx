@@ -1,18 +1,17 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 import logo from "../../assets/logo.svg";
 import * as Component from "./styles";
+import { TransactionContext } from '../../context/TransactionContext';
 
-interface HeaderProps {
-    openModal: () => void;
-}
+export function Header() {
 
-export function Header({ openModal }: HeaderProps) {
+  const { handleOpenNewTransactionModal } = useContext(TransactionContext);
 
   return (
     <Component.Container>
         <Component.Content>
             <img src={logo} alt='alt money'/>
-            <button type='button'  onClick={openModal}>
+            <button type='button'  onClick={handleOpenNewTransactionModal}>
                 Nova transação
             </button>
         </Component.Content>

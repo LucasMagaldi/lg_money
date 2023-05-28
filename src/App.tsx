@@ -7,22 +7,12 @@ import { TransactionProvider } from './context/TransactionContext';
 
 export function App() {
 
-  const [isNewTransactionModalOpen, setIsNewTransactionModalOpen] = useState(false);
-
-  const handleOpenNewTransactionModal = () => {
-    setIsNewTransactionModalOpen(true);
-  }
-
-  const handleCloseNewTransactionModal = () => {
-    setIsNewTransactionModalOpen(false);
-  }
-
   return (
     <TransactionProvider>
       <GlobalStyle />
-      <Header openModal={handleOpenNewTransactionModal} />
+      <Header />
       <Dashboard />
-      <NewTransactionModal isOpen={isNewTransactionModalOpen} onRequestClose={handleCloseNewTransactionModal}/>
+      <NewTransactionModal />
     </TransactionProvider>
   );
 }
